@@ -8,20 +8,9 @@
   </div>  
 </template>
 
-<script>
+<script setup lang="ts">
 import { store } from '../store';
 import CalendarDay from './CalendarDay.vue';
 
-export default {
-  name: "CalendarWeek",
-  data() {
-    return {
-      sharedState: store.state // объект  - data: seedData
-    }
-  },
-  components: {
-    CalendarDay
-  }
-}
+const sharedState = store.state;
 </script>
-

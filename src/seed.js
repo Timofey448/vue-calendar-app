@@ -13,7 +13,7 @@ export const seedData = [
         edit: false
       },
     ],
-    active: true
+    active: false
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ export const seedData = [
     events: [
       {details: 'detail 1', edit: false},
     ],
-    active: false
+    active: true
   },
   {
     id: 3,
@@ -69,8 +69,4 @@ export const seedData = [
     ],
     active: false
   },
-]
-
-// Дальше чтобы эти данные отобразить в компонентах, мы
-// создаем файл store.js, который будет содержать state
-// объект  с data, которые соответствуют данным seedData
+];

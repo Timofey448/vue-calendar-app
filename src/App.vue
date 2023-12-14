@@ -5,11 +5,7 @@
   </div>  
 </template>
 
-<script setup>
+<script setup lang='ts'>
 import CalendarWeek from './components/CalendarWeek.vue';
 import CalendarEntry from './components/CalendarEntry.vue';
-
 </script>
-
-<style>
-</style>

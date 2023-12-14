@@ -6,6 +6,7 @@
     <div class="flex justify-center bg-banner-bg hover:bg-banner-bg/70 font-bold uppercase p-3">{{ day.abbvTitle }}</div>
       <div class="p-3">
         <div class="flex">{{ day.id }}</div>
+
         <CalendarEvent 
           v-for="(event, index) in day.events"
           :key="index"
@@ -16,23 +17,17 @@
   </div>  
 </template>
 
-<script>
+<script setup lang="ts">
 import { store } from '../store.js';
+import { Day } from '../types'
 import CalendarEvent from './CalendarEvent.vue';
 
-export default {
-  name: 'CalendarDay',
-  props: ['day'],
-  methods: {
-    setActiveDay(dayId) {
-      store.setActiveDay(dayId);
-    }
-  },
-  components: {
-    CalendarEvent
-  },
+
+const props = defineProps<{
+  day: Day
+}>();
+
+function setActiveDay(dayId: number) {
+  store.setActiveDay(dayId);
 }
 </script>
-
-<style>
-</style>

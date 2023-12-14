@@ -23,30 +23,20 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { store } from '../store';
+import { ref, computed } from 'vue';
 
-export default {
-name: "CalendarEntry",
-data() {
-  return {
-    inputEntry: "",
-    error: false,
-  }
-},
-methods: {
-  submitEvent(eventDetails) {
-    if (eventDetails === "") {
-      return this.error = true;
-    }
-    store.submitEvent(eventDetails);
-    this.inputEntry = "";
-  },
-},
-computed: {
-  titleOfActiveDay() {
-    return store.getActiveDay().fullTitle;
-  }
+
+const inputEntry = ref('');
+const error = ref(false);
+const titleOfActiveDay = computed<string>(() => {
+  return store.getActiveDay().fullTitle;
+});
+
+function submitEvent(eventDetails: string) {
+  if (inputEntry.value === '') return error.value = true;
+  store.submitEvent(eventDetails);
+  inputEntry.value = '';
 }
-};
 </script>

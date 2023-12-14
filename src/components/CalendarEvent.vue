@@ -16,7 +16,7 @@
             @click="deleteEvent(day.id, event.details)">delete</a>
         </div>
       </div>
-      <div class="flex" v-if="event.edit">
+      <div class="flex" v-else>
         <input
           type="text"
           :placeholder="event.details"
@@ -34,39 +34,37 @@
   </div>
 </template>
 
-<script>
+<script setup lang='ts'>
 import { store } from '../store.js';
+import { ref, computed } from 'vue';
+import { Day, Event } from '../types';
 
-export default {
-  name: 'CalendartEvent',
-  props: ['event', 'day'],
-  data() {
-    return {
-      newEventDetails: "",
-    }
-  },
-  methods: {
-    editEvent(dayId, eventDetails) {  
-      store.editEvent(dayId, eventDetails);         
-    },
-    updateEvent(dayId, originalEventDetails, updatedEventDetails) {
-      if (updatedEventDetails === "") {
-        updatedEventDetails = originalEventDetails;        
-      };
-      store.updateEvent(dayId, originalEventDetails, updatedEventDetails);
-      this.newEventDetails = "";
-    },
-    deleteEvent(dayId, eventDetails) {
-      store.deleteEvent(dayId, eventDetails);
-    },
-  },
-  computed: {
-    getEventBackgroundColor() {
-      const colors = ['#FF9999', '#85D6FF', '#99FF99'];
-      let randomColor = colors[Math.floor(Math.random() * colors.length)];
-      return `background-color: ${randomColor}`;
-    },
-  }
+
+const props = defineProps<{
+  event: Event,
+  day: Day
+}>();
+
+const COLORS = ['#FF9999', '#85D6FF', '#99FF99'];
+const newEventDetails = ref('');
+const getEventBackgroundColor = computed<string>(() => {
+  const randomColor = ref(COLORS[Math.floor(Math.random() * COLORS.length)]);
+  return `background-color: ${randomColor.value}`;
+});
+
+function editEvent(dayId: number, eventDetails: string) {  
+  store.editEvent(dayId, eventDetails);         
+}
+
+function updateEvent(dayId: number, originalEventDetails: string, updatedEventDetails: string) {
+  if (updatedEventDetails === '') {
+    updatedEventDetails = originalEventDetails;        
+  };
+  store.updateEvent(dayId, originalEventDetails, updatedEventDetails);
+  newEventDetails.value = '';
+}
+
+function deleteEvent(dayId: number, eventDetails: string) {
+  store.deleteEvent(dayId, eventDetails);
 }
 </script>
-
